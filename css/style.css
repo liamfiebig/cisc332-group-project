@@ -1,0 +1,154 @@
+body{
+ background-color: white;
+
+}
+
+header,header a,
+header a:visited{
+  color: white;
+  background-color: black;
+}
+
+header a:hover{
+  color: grey;
+}
+
+body {
+    /* Page 28 in the Identity Guidelines */
+    font-family: Palatino, "Book Antiqua", Georgia, serif;
+    font-size: 1rem;
+    line-height: 1.25;
+}
+
+h1, h2, h3, h4, h5, h6, nav, th, #bottom-nav {
+    /* Page 28 in the Identity Guidelines */
+    font-family: Open Sans, Lucida Grande, Lucida Sans Unicode, Helvetica Neue, Arial, sans-serif;
+}
+
+#site-title {
+    font-size: 2.0rem;
+}
+
+h1 {
+    font-size: 1.75rem;
+}
+
+h2  {
+    font-size: 1.625rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+h4  {
+    font-size: 1.375rem;
+}
+
+h5  {
+    font-size: 1.25rem;
+}
+
+h6, nav ul li a  {
+    font-size: 1.125rem;
+}
+
+header nav {
+    font-weight: bold;
+}
+
+#bottom-nav a, #bottom-nav a:visited{
+  size: 3rem;
+  color: black;
+  text-decoration: none;
+
+}
+
+
+#bottom-nav a:hover{
+  background-color: black;
+  color: rgb(211,211,211);
+  text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;
+}
+
+.quote-source {
+    font-style: italic;
+}
+
+header a {
+    text-decoration: none;
+}
+
+header {
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+header{
+  padding: 3%;
+}
+
+main{
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+/*****************************************************************************/
+/*  General */
+/*****************************************************************************/
+html, body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+blockquote {
+    padding: 16px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+    background-color: rgba(240,240,240,1);
+}
+
+.quote-source {
+    text-align: right;
+}
+
+table {
+	border-collapse: collapse;
+	margin-bottom: 32px;
+}
+
+th, td {
+	padding: 8px 16px;
+	border: 1px solid black;
+}
+
+tfoot th {
+    text-align: left;
+}
+
+
+/*****************************************************************************/
+/*  Header */
+/*****************************************************************************/
+header {
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+}
+
+/*****************************************************************************/
+/*  Main */
+/*****************************************************************************/
+
+main{
+  position: absolute;
+  top: 23%;
+  z-index: 0;
+}
+
+#herocontainer{
+  display: flex;
+  justify-content: space-evenly;
+}

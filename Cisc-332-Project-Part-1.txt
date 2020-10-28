@@ -1,0 +1,346 @@
+create database group26;
+
+use group26;
+
+CREATE TABLE animal(
+	IDnum VARCHAR(10) NOT NULL PRIMARY KEY,
+	Name VARCHAR(20) NOT NULL,
+	TYPE VARCHAR(20),
+	Tracker VARCHAR(200),
+	arrivesAt DATE,
+	arrivesLocation VARCHAR(50) NOT NULL,
+	fnameAdopter VARCHAR(50),
+	lnameAdopter VARCHAR(50),
+	adoptedPaid INTEGER,
+	adoptedDate DATE,
+	driverFname VARCHAR(50),
+	driverLname VARCHAR(50),
+	driveDate DATE,
+	locationTo VARCHAR(50),
+	locationFrom VARCHAR(50),
+	wasAdopted VARCHAR(5) NOT NULL
+);
+ 
+CREATE TABLE vet(
+	fname VARCHAR(50) NOT NULL,
+	lname VARCHAR(50) NOT NULL,
+	PRIMARY KEY(fname, lname)
+);
+ 
+CREATE TABLE treatment(
+	fname VARCHAR(50) NOT NULL,
+	lname VARCHAR(50) NOT NULL,
+	IDnum VARCHAR(10) NOT NULL,
+	date DATE,
+	weight INTEGER,
+	`condition` VARCHAR(50),
+	FOREIGN KEY(IDnum) REFERENCES animal(IDnum),
+	FOREIGN KEY(fname, lname) REFERENCES vet(fname, lname),
+	PRIMARY KEY(fname, lname, IDnum, DATE)
+);
+
+CREATE TABLE donor(
+	fname VARCHAR(50) NOT NULL,
+	lname VARCHAR(50) NOT NULL,
+	PRIMARY KEY(fname, lname)
+);
+
+CREATE TABLE organization(
+	orgName VARCHAR(50) NOT NULL PRIMARY KEY,
+	telephone CHAR(10),
+	street VARCHAR(100),
+	city VARCHAR(100),
+	province VARCHAR(100),
+	postalCode CHAR(6)
+);
+
+CREATE TABLE donations(
+	fname VARCHAR(50) NOT NULL,
+	lname VARCHAR(50) NOT NULL,
+	orgName VARCHAR(50) NOT NULL,
+	date DATE,
+	amount INTEGER,
+	FOREIGN KEY(fname, lname) REFERENCES donor(fname, lname),
+	FOREIGN KEY(orgName) REFERENCES organization(orgName),
+	PRIMARY KEY(fname, lname, orgName, DATE)
+);
+
+CREATE TABLE shelter(
+	website VARCHAR(100),
+	orgName VARCHAR(50) NOT NULL,
+	FOREIGN KEY(orgName) REFERENCES organization(orgName)
+);
+ 
+CREATE TABLE rescue(
+	orgName VARCHAR(50) NOT NULL,
+	FOREIGN KEY(orgName) REFERENCES organization(orgName)
+);
+ 
+CREATE TABLE spca(
+	orgName VARCHAR(50) NOT NULL,
+	FOREIGN KEY(orgName) REFERENCES organization(orgName)
+);
+ 
+CREATE TABLE people(
+	fname VARCHAR(50) NOT NULL,
+	lname VARCHAR(50) NOT NULL,
+	telephone CHAR(10),
+	street VARCHAR(100),
+	city VARCHAR(100),
+	province VARCHAR(100),
+	postalCode CHAR(6),
+	PRIMARY KEY(fname, lname)
+);
+ 
+CREATE TABLE adopters(
+	IDnum VARCHAR(10) NOT NULL,
+	FOREIGN KEY(IDnum) REFERENCES animal(IDnum),
+	fname VARCHAR(50) NOT NULL,
+	lname VARCHAR(50) NOT NULL,
+	FOREIGN KEY(fname, lname) REFERENCES people(fname, lname)
+);
+ 
+CREATE TABLE drivers(
+	licensePlates VARCHAR(10),
+	licenseNumber VARCHAR(20),
+	fname VARCHAR(50) NOT NULL,
+	lname VARCHAR(50) NOT NULL,
+	FOREIGN KEY(fname, lname) REFERENCES people(fname, lname)
+);
+ 
+CREATE TABLE employees(
+	orgName VARCHAR(50) NOT NULL,
+	fname VARCHAR(50) NOT NULL,
+	lname VARCHAR(50) NOT NULL,
+	FOREIGN KEY(fname, lname) REFERENCES people(fname, lname),
+	FOREIGN KEY(orgName) REFERENCES organization(orgName)
+);
+ 
+CREATE TABLE shelterstaff(
+	OWNER VARCHAR(3),
+	fname VARCHAR(50) NOT NULL,
+	lname VARCHAR(50) NOT NULL,
+	FOREIGN KEY(fname, lname) REFERENCES employees(fname, lname)
+);
+ 
+CREATE TABLE spcastaff(
+	fname VARCHAR(50) NOT NULL,
+	lname VARCHAR(50) NOT NULL,
+	FOREIGN KEY(fname, lname) REFERENCES employees(fname, lname)
+);
+ 
+CREATE TABLE rescuers(
+	OWNER VARCHAR(3),
+	fname VARCHAR(50) NOT NULL,
+	lname VARCHAR(50) NOT NULL,
+	FOREIGN KEY(fname, lname) REFERENCES employees(fname, lname)
+);
+
+CREATE TABLE workswith(
+	fname VARCHAR(50) NOT NULL,
+	lname VARCHAR(50) NOT NULL,
+	FOREIGN KEY(fname, lname) REFERENCES rescuers(fname, lname),
+	fnameDriver VARCHAR(50) NOT NULL,
+	lnameDriver VARCHAR(50) NOT NULL,
+	FOREIGN KEY(fnameDriver, lnameDriver) REFERENCES drivers(fname, lname)
+);
+
+CREATE TABLE housing(
+	TYPE VARCHAR(20) NOT NULL,
+	numAnimal INTEGER NOT NULL,
+	ShelterName VARCHAR(50) NOT NULL,
+	FOREIGN KEY(ShelterName) REFERENCES shelter(orgName),
+	PRIMARY KEY(ShelterName, TYPE)
+);
+ 
+ 
+
+
+
+
+insert into animal VALUES (100, 'Tommy', 'cat', 'SPCA2', '2018-01-30', 'SPCA', '-', '-', 350, '2020-02-02', 'Tom', 'Brady', '2020-01-31', 'Shelter', 'SPCA', 'FALSE');
+
+insert into animal VALUES (101, 'Tiesto', 'dog', 'SPCA1', '2018-12-20', 'SPCA', 'Kurt', 'Blue', 350, '2020-02-10', 'Rachel', 'Zayne', '2020-01-04', 'Shelter', 'SPCA', 'TRUE');
+
+insert into animal VALUES (102, 'Carrot', 'rabbit', 'rescue1', '2019-03-30', 'SPCA', 'Steve', 'Wayfair', 350, '2019-06-02', 'Sarah', 'Small', '2019-08-31', 'Shelter', 'SPCA', 'TRUE');
+
+insert into animal VALUES (104, 'Lettuce', 'rabbit', 'rescue2', '2017-12-31', 'SPCA', '-', '-', 350, '2019-05-02', 'Sarah', 'Small', '2019-08-31', 'Shelter', 'SPCA', 'FALSE');
+
+insert into animal VALUES (103, 'Hudson', 'dog', 'SPCA3', '2019-04-30', 'SPCA', 'Kurt', 'Blue', 350, '2019-09-09', 'Linda', 'Currie', '2019-11-29', 'Shelter', 'SPCA', 'TRUE');
+
+INSERT INTO vet VALUES ("Jill", "Smiths");
+
+INSERT INTO vet VALUES ("Jess", "Ramos");
+
+INSERT INTO vet VALUES ("Phil", "Giuliani");
+
+INSERT INTO vet VALUES ("Luka", "Caza");
+
+insert into donor values ("Larry", "Tall");
+
+insert into donor values ("Tyler", "Bird");
+
+insert into donor values ("Fred", "Curtis");
+
+INSERT INTO people VALUES ("Zach", "Fredrickson", "9339209324", "Cherry Lane", "Oakville", "ON", "K9LL0F");
+
+INSERT INTO people VALUES ("Kurt", "Blue", "4092039840", "Butter Lane", "Toronto", "ON", "E3EK8K");
+
+INSERT INTO people VALUES ("Steve", "Wayfair", "88992883048", "Bread Lane", "Etobicoke", "ON", "H4D8D2");
+
+insert into adopters values (102, "Zach", "Fredrickson");
+
+insert into adopters values (103, "Kurt", "Blue");
+
+insert into adopters values (100, "Steve", "Wayfair");
+
+INSERT INTO people VALUES ("Lucy", "Cakes", "9043390239", "Lovers Crescent", "Markham", "ON", "U3V9R9");
+
+INSERT INTO people VALUES ("Apple", "Clarke", "4392984739", "Tree Crescent", "Richmond Hill", "ON", "K8L2T9");
+
+INSERT INTO people VALUES ("Petunia", "AuClair", "4168882783", "Couch Crescent", "Uxbridge", "ON", "L02938");
+
+insert into drivers values ("HLD1903", "20394019485", "Lucy", "Cakes");
+
+insert into drivers values ("PDIS883", "39284059284", "Apple", "Clarke");
+
+insert into drivers values ("ABBC938", "6678492069", "Petunia", "AuClair");
+
+INSERT INTO organization VALUES ("shelter102", "9043939950", "Apple St", "burlington", "ON", "234094");
+
+INSERT INTO organization VALUES ("shelter107", "9023049320", "Blueberry St", "Oakville", "ON", "748039");
+
+INSERT INTO organization VALUES ("shelter106", "9937492740", "Raspberry St", "Ottawa", "QC", "194662");
+
+INSERT INTO organization VALUES ("shelter108", "9983547290", "Banana St", "Milton", "ON", "109468");
+
+INSERT INTO organization VALUES ("shelter103", "9023847260", "Blackberry St", "Montreal", "QC", "119304");
+
+INSERT INTO organization VALUES ("shelter104", "9338466570", "Kiwi St", "St. John's", "NFL", "738492");
+
+INSERT INTO organization VALUES ("rescue1", "9309284201", "telephone St", "St. John's", "NFL", "738492");
+
+INSERT INTO organization VALUES ("rescue2", "9384759283", "photo St", "St. John's", "NFL", "738492");
+
+INSERT INTO organization VALUES ("rescue3", "8374628471", "plant St", "St. John's", "NFL", "738492");
+
+INSERT INTO organization VALUES ("SPCA1", "0184756382", "parkdale St", "St. John's", "NFL", "738492");
+
+INSERT INTO organization VALUES ("SPCA2", "4672836583", "rosedale St", "St. John's", "NFL", "738492");
+
+INSERT INTO organization VALUES ("SPCA3", "3382279472", "flowerdale St", "St. John's", "NFL", "738492");
+
+INSERT INTO shelter VALUES ("www.shelter102.org", "shelter102");
+
+INSERT INTO shelter VALUES ("www.shelter103.org", "shelter103");
+
+INSERT INTO shelter VALUES ("www.shelter104.org", "shelter104");
+
+INSERT INTO shelter VALUES ("www.shelter108.org", "shelter108");
+
+INSERT INTO shelter VALUES ("www.shelter106.org", "shelter106");
+
+INSERT INTO shelter VALUES ("www.shelter107.org", "shelter107");
+
+INSERT INTO rescue VALUES ("rescue1");
+
+INSERT INTO rescue VALUES ("rescue2");
+
+INSERT INTO rescue VALUES ("rescue3");
+
+INSERT INTO spca VALUES ("SPCA1");
+
+INSERT INTO spca VALUES ("SPCA2");
+
+INSERT INTO spca VALUES ("SPCA3");
+
+INSERT INTO people VALUES ("Blaire", "Waldorf", "9302903904", "Hilly Rd", "Markham", "ON", "S9F8E3");
+
+INSERT INTO people VALUES ("Serena", "Vanderwoodsen", "3082938998", "Mountain Rd", "Thornhill", "ON", "Y7D9B9");
+
+INSERT INTO people VALUES ("Chuck", "Bass", "5940023902", "Spring Lake Rd", "Muskoka", "ON", "U9I0O3");
+
+INSERT INTO employees VALUES ("shelter103", "Blaire", "Waldorf");
+
+INSERT INTO employees VALUES ("shelter108", "Serena", "Vanderwoodsen");
+
+INSERT INTO employees VALUES ("shelter102", "Chuck", "Bass");
+
+insert into shelterstaff values ("Yes", "Blaire", "Waldorf");
+
+insert into shelterstaff values ("No", "Serena", "Vanderwoodsen");
+
+insert into shelterstaff values ("No", "Chuck", "Bass");
+
+INSERT INTO people VALUES ("Megan", "Lazure", "8923844477", "Puppy St", "Haliburton", "ON", "C0D8G7");
+
+INSERT INTO people VALUES ("Lori", "Messier", "9059923892", "Green Lane", "Muskoka", "ON", "Q2W8E9");
+
+INSERT INTO people VALUES ("Katelyn", "Garnier", "4162099044", "Autumn Rd", "Muskoka", "ON", "T9R0D9");
+
+INSERT INTO employees VALUES ("SPCA1", "Megan", "Lazure");
+
+INSERT INTO employees VALUES ("SPCA2", "Lori", "Messier");
+
+INSERT INTO employees VALUES ("SPCA3", "Katelyn", "Garnier");
+
+insert into spcastaff values ("Megan", "Lazure");
+
+insert into spcastaff values ("Lori", "Messier");
+
+insert into spcastaff values ("Katelyn", "Garnier");
+
+INSERT INTO people VALUES ("Nate", "Archibald", "0299039485", "Eerie Dr", "Milton", "ON", "U3V9R9");
+
+INSERT INTO people VALUES ("Betty", "Cooper", "1194838559", "Hallow Dr", "Burlington", "ON", "I9T8C3");
+
+INSERT INTO people VALUES ("Veronica", "Lamer", "2933394885", "Fern Dr", "Oakville", "ON", "Y8H93N");
+
+INSERT INTO employees VALUES ("rescue1", "Nate", "Archibald");
+
+INSERT INTO employees VALUES ("rescue2", "Betty", "Cooper");
+
+INSERT INTO employees VALUES ("rescue3", "Veronica", "Lamer");
+
+insert into rescuers values ("Yes", "Nate", "Archibald");
+
+insert into rescuers values ("No", "Betty", "Cooper");
+
+insert into rescuers values ("No", "Veronica", "Lamer");
+
+insert into workswith values ("Nate", "Archibald", "Lucy", "Cakes");
+
+insert into workswith values ("Nate", "Archibald", "Apple", "Clarke");
+
+insert into workswith values ("Betty", "Cooper", "Petunia", "AuClair");
+
+INSERT INTO treatment VALUES ("Jill", "Smiths", 100, '2020-02-18', 20, "upset stomach");
+
+INSERT INTO treatment VALUES ("Jill", "Smiths", 100, '2020-02-02', 18, "acid reflux");
+
+INSERT INTO treatment VALUES ("Jess", "Ramos", 101, '2020-02-10', 35, "limping");
+
+INSERT INTO treatment VALUES ("Phil", "Giuliani", 102, '2019-06-02', 11, "not eating");
+
+INSERT INTO treatment VALUES ("Luka", "Caza", 103, '2020-02-18', 19, "runny nose");
+
+INSERT INTO treatment VALUES ("Jill", "Smiths", 101, '2019-02-02', 22, "heart burn");
+
+INSERT INTO donations VALUES ("Larry", "Tall", "shelter103", '2020-01-05', 330);
+
+INSERT INTO donations VALUES ("Fred", "Curtis", "shelter108", '2018-09-05', 140);
+
+INSERT INTO donations VALUES ("Tyler", "Bird", "shelter102", '2018-01-05', 1000);
+
+INSERT INTO housing VALUES ("Dog", 3, "shelter102");
+
+INSERT INTO housing VALUES ("Cat", 5, "shelter102");
+
+INSERT INTO housing VALUES ("Rabbit", 1, "shelter102");
+
+INSERT INTO housing VALUES ("Cat", 2, "shelter106");
+
+INSERT INTO housing VALUES ("Rabbit", 4, "shelter108");
+
+#DELETE treatment FROM treatment INNER JOIN animal ON animal.IDnum = treatment.IDnum WHERE adoptedDate = date;
+
